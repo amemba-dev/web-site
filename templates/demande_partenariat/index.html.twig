@@ -1,0 +1,105 @@
+{% extends 'base.pages.html.twig' %}
+{% block title %} Demande de partenariat {% endblock %}
+{% block page %}{% endblock page %}
+{% block content %}
+<!-- REGISTER SECTION START -->
+<section class="login-register">
+    <div class="container d-flex">
+        <div class="login-left login-card d-flex justify-content-center align-items-center">
+            <div>
+                <img src="{{asset('front/images/business_woman.svg')}}" alt="business woman">
+                <h2 class="mt-5 mb-3">{{text}}</h2>
+            </div>
+        </div>
+        <div class="login-right login-card">
+            <div class="container">
+                <form method="POST" action="{{path('app_demande_partenariat_add')}}">
+                    <h2>Entrez vos donnees pour vous inscrire</h2>
+                    <div class="mb-3">
+                        <label class="form-label" for="nom">Nom</label>
+                        <input class="form-control" id="nom" name="nom" placeholder="Nom" type="text" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="prenom">Prenom</label>
+                        <input class="form-control" id="prenom" name="prenom" placeholder="Prenom" type="text" required>
+                    </div>
+                   
+                    <div class="mb-3">
+                        <label class="form-label" for="entreprise">Entreprise</label>
+                        <input class="form-control" id="entreprise" name="entreprise" placeholder="Nom de l'entreprise" type="text" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label col-12">Téléphone</label>
+                        <input class="form-control" id='phone' name="tel" type="tel" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="mail">Mail</label>
+                        <input class="form-control" id="mail" name="email" placeholder="E-mail" type="email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="req">Requête</label>
+                        <textarea class="form-control" id="req" name="req" placeholder="Motif de votre demande" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <button type="submit" class="btn btn-primary w-100" {% if etat is defined %}{{etat}}{% endif %}> Envoyer la demande  </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- REGISTER SECTION END -->
+
+<!-- PARTNERS SECTION START -->
+<section class="partners container">
+    <h2 class="text-center py-5">Nos partenaires</h2>
+    <div class="partners-carousel-container pb-5">
+
+        {% for part in partenaires %}
+        <div class="d-flex justify-content-center align-items center">
+            <img src="/partenaires/{{part.logo}}" alt="" style="width: 200px; object-fit: cover">
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<!-- PARTNERS SECTION END -->
+
+
+{% block part %}{% endblock part %}
+
+{% endblock %}
+
+{% block js %}
+<!-- IntelTel Input -->
+<script type="text/javascript" src="{{asset('front/js/intlTelInput.js')}}"></script>
+<script>
+    var input = document.querySelector("#phone");
+    window.intlTelInput(input, {
+        // allowDropdown: false,
+        // autoHideDialCode: false,
+        // autoPlaceholder: "off",
+        // dropdownContainer: document.body,
+        // excludeCountries: ["us"],
+        // formatOnDisplay: false,
+        // geoIpLookup: function(callback) {
+        //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+        //     var countryCode = (resp && resp.country) ? resp.country : "";
+        //     callback(countryCode);
+        //   });
+        // },
+        hiddenInput: "full_number",
+        // initialCountry: "auto",
+        // localizedCountries: { 'de': 'Deutschland' },
+        // nationalMode: false,
+        // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+        placeholderNumberType: "MOBILE",
+        preferredCountries: ['sn'],
+        separateDialCode: true,
+        utilsScript: "{{asset('front/js/utils.js')}}",
+    });
+</script>
+{% endblock js %}

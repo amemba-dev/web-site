@@ -1,0 +1,48 @@
+{% extends 'base.pages.html.twig' %}
+
+{% block title %}Offres d'emplois{% endblock %}
+{% block page %}{% endblock page %}
+
+
+{% block content %}
+    <!-- SECOND SECTION START -->
+    <section class="second mt-3">
+        <div class="container py-4 mt-3">
+
+            
+           
+            <form class="d-flex mb-3" action="{{path('app_emplois_search')}}" method="POST">
+                <input type="text" class="form-control" id="search" aria-describedby="search" placeholder="Rechercher des mots clés..." name="key" {% if key is defined %}value="{{key}}"{% endif %}>
+                <button type="submit" class="btn btn-primary d-flex mx-3"> Rechercher </button>
+            </form>
+            {% if emplois|length > 0 %}
+            <h6 class="mb-4">{{emplois|length}} emplois</h6>
+            {% for emp in emplois %}
+            <div class="forum-post mb-4">
+                <a href="{{path('app_emplois_details', {'slug' : emp.slug })}}">
+                    <hr>
+                    <h3>{{emp.titre}}</h3>
+                    
+                </a>
+                <div class="forums-post-infos d-flex justify-content-between">
+                    <span class="badge text-bg-secondary">{{emp.domaine}}</span>
+                    <div class="right">Par
+                        <span class="name">{% if emp.membre is null %} Amemba {% else %} {{emp.membre.prenom}} {{emp.membre.nom}} {% endif %}</span>, Expire le : 
+                        <span class="name">{{emp.endAt |format_datetime(locale='fr', dateFormat = 'medium' ,  timeFormat = 'none') }} </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% else %}
+            <div style="height:170px">
+            {% endif %}
+            
+            
+        </div>
+    </section>
+    <!-- SECOND SECTION END -->
+{% endblock %}
+
+
+{% block part %}{% endblock part %}

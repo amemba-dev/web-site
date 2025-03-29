@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- META & CONFIG -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="">
+    <meta name="description" content="">
+    <title>
+        {% block title %}
+        Amicale des Anciennes Eleves de Mariama Ba
+        {% endblock title %}
+    </title>
+    <link href="{{asset('front/images/identity/logo_draw.ico')}}" rel="shortcut icon" type="image/x-icon">
+    <!-- Slick Carousel  -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- IntelTel Input CSS-->
+    <link rel="stylesheet" href="{{asset('front/css/intlTelInput.css')}}" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{asset('front/css/style.css')}}" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset('front/css/responsive.css')}}" crossorigin="anonymous">
+</head>
+<body>
+    <!-- NAVBAR START -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container h-100">
+            <a href="{{ path('app_accueil') }}" style="text-decoration: none" >
+                <img src="{{asset('front/images/identity/logo_draw.png')}}" alt="">
+                <p class= "logo-title">AMEMBA</p>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-2">
+                        <a href="{{path('app_accueil')}}" class="nav-link">Accueil</a>
+                    </li>
+
+                    <li class="nav-item mx-2">
+                        <a href="{{path('app_about')}}" class="nav-link">A propos</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Amemba Life</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{path('app_agenda')}}" class="dropdown-item nav-link">Activite/Agenda</a></li>
+                            <li><a href="{{path('app_demande_partenariat')}}" class="dropdown-item nav-link">Partenariat</a></li>
+                            {% if app.user is not null %}
+                                {% if "ROLE_MEMBRE" in app.user.roles %}
+                                    <li><a href="{{path('app_emplois')}}" class="dropdown-item nav-link">Offres d'emplois</a></li>
+                                {% endif %}
+                            {% endif %}
+                        </ul>
+                    </li>
+                    {% if app.user is not null %}
+                        {% if "ROLE_MEMBRE" not in app.user.roles %}
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Shop</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{path('app_shop')}}" class="dropdown-item nav-link">Boutique</a></li>
+                                <li><a href="{{path('app_panier')}}" class="dropdown-item nav-link">Panier</a></li>
+                                {% if app.user %}
+                                <li><a href="{{path('app_commandes_client')}}" class="dropdown-item nav-link">Commandes</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item mx-2">
+                            <a href="{{path('app_shop')}}" class="nav-link">Boutique</a>
+                        </li>
+                        {% endif %}
+                    {% else %}
+                    <li class="nav-item mx-2">
+                        <a href="{{path('app_shop')}}" class="nav-link">Boutique</a>
+                    </li>
+                    {% endif %}
+
+                    <li class="nav-item mx-2">
+                        <a href="{{path('blog')}}" class="nav-link">Blog</a>
+                    </li>
+                   
+                </ul>
+            </div>
+            {% if not app.user %}
+                <div class="navbar-buttons">
+                    <a href="{{path('app_register')}}" class="btn btn-outline-primary mx-2">Adhésion</a>
+                    <a href="{{path('app_login')}}" class="btn btn-primary">Connexion <i class="fa-solid fa-angle-right"></i></a>
+                </div>
+            {% else %}
+                {% if "ROLE_MEMBRE" in app.user.roles %}
+                <div class="membre">
+                    <a href="#">
+                        {% if app.user.profile %} 
+                            <img src="/pp/{{app.user.profile}}" alt="avatar" id="show">
+                        {% else %}
+                            <img src="{{asset('front/images/avatars/exemple.jpg')}}" alt="avatar" id="show">
+                        {% endif %}
+                    </a>
+                </div>
+                {% endif %}
+                {% if "ROLE_ADMIN" in app.user.roles %}
+                <div class="navbar-buttons">
+                    <a href="{{path('demande')}}" class="btn btn-outline-primary mx-2">Dashboard</a>
+                </div>
+                
+                {% endif %}
+                <div class="navbar-buttons">
+                    <a href="{{path('app_logout')}}" class="btn btn-outline-danger mx-2">Déconnexion</a>
+                </div>
+            {% endif %}
+            
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
+            </button>
+        </div>
+    </nav>
+    <!-- NAVBAR END -->
+
+
+    <div class="top" id="top"></div>
+    <div id="scroll-to-top"><a href="#top"><i class="fa-2x fa-solid fa-angle-up"></i></a></div>
+
+
+    {% if app.user is not null %}
+    {% if "ROLE_MEMBRE" in app.user.roles %}
+    <!-- MENU MEMBER START -->
+    <div class="menu-membre pt-3" style="height : 500px">
+        <ul class="list-group list-group-flush ">
+
+            {% if not app.user.statut %}
+            <li class="list-group-item text-center">
+                <a href="{{path('app_looking_for_job_activate')}}" class="btn btn-primary btn-sm ">Activer mode recherche d'emploi </a>
+            </li>
+            {% else %}
+            <li class="list-group-item text-center">
+                <a href="{{path('app_looking_for_job_disable')}}" class="btn btn-warning btn-sm ">Desactiver mode recherche d'emploi</a>
+            </li>
+            {% endif %}
+            
+
+            <li class="list-group-item">
+                <a href="{{path('app_membre_profile')}}" class="btn">
+                    <i class="fa-solid fa-user"></i> Compte
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a href="{{path('app_cotisation')}}" class="btn">
+                    <i class="fa-solid fa-money-bill-transfer"></i> Cotisations
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a href="{{path('app_panier')}}" class="btn">
+                    <i class="fa-solid fa-cart-arrow-down"></i>
+                   Panier
+                </a>
+            </li class="list-group-item">
+
+            <li class="list-group-item">
+                <a href="{{path('app_commandes_client')}}" class="btn">
+                    <i class="fa-solid fa-cart-shopping"></i>   Commandes
+                </a>
+            </li class="list-group-item">
+
+            
+            <li class="list-group-item">
+                <a href="{{path('app_wallet')}}" class="btn">
+                    <i class="fa-solid fa-money-bill"></i> Portefeuille
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{path('app_annuaire')}}" class="btn">
+                    <i class="fa-solid fa-book"></i> Annuaire
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{path('app_membre_entreprise')}}" class="btn">
+                    <i class="fa-solid fa-w"></i> Mon entreprise
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{path('app_membre_emplois')}}" class="btn">
+                    <i class="fa-solid fa-briefcase"></i> Offres d'emplois
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{path('app_forum')}}" class="btn">
+                    <i class="fa-solid fa-comments"></i> Forum
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{path('app_blog_article_add')}}" class="btn">
+                    <i class="fa-solid fa-pen"></i> Ecrire un article
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a href="{{path('app_logout')}}" class="btn">
+                    <span class="badge rounded-pill alert-danger">Deconnexion</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    <!-- MENU MEMBER END -->
+    {% endif %}
+    {% endif %}
+    
+
+    {% block page %}
+     <!-- FIRST SECTION START -->
+    <section class="first d-flex justify-content-center align-items-center">
+        <div class="container">
+            <h2 class="first-title text-center mb-4">Titre</h2>
+            <p class="text-center">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna donec nulla eu purus sed pharetra. Enim vel sed posuere ut massa ut. Non sit imperdiet enim at diam orci augue sit ultrices. Rhoncus et ipsum, quis egestas scelerisque viverra id sit
+            </p>
+        </div>
+    </section>
+    <!-- FIRST SECTION END -->
+    {% endblock page %}
+
+
+{% block content %} {% endblock content %}
+
+{% block part %}
+
+
+{% endblock part %}
+
+<!-- FOOTER START -->
+<footer>
+    <div class="px-xxl-5">
+        <div class="row">
+            <div class="card-footer col-sm" >
+                <div class="logos my-5">
+                    <img src="{{asset('front/images/identity/logo_txt/white.png')}}" alt="">
+                </div>
+            </div>
+            
+            <div class="card-footer col-sm">
+                <h4 class="my-5"> Mentions légales</h4>
+                <ul class="mentions-legales list-group">
+                    <li><a href="#">Politique de confidentialité</a></li>
+                    <li><a href="#">Termes et Conditions</a></li>
+                </ul>
+            </div>
+
+            <div class="card-footer col-sm">
+                <h4 class="my-5">Liens utiles</h4>
+                <ul class="memba-life list-group">
+                    <li><a href="http://www.mariamaba.education/" target="_blank">MEMBA</a></li>
+                    <li><a href="https://mesr.gouv.sn/" target="_blank">Ministère de l'Enseignement supérieur</a></li>
+                    <li><a href="https://www.education.sn/" target="_blank">Ministère de l’Éducation nationale</a></li>
+                </ul>
+            </div>
+            <div class="card-footer col-sm">
+                <h4 class="my-5">Notre site</h4>
+                <ul class="memba-life list-group">
+                    <li><a href="{{path('app_about')}}">A propos</a></li>
+                    <li><a href="{{path('app_agenda')}}">Notre Agenda</a></li>
+                    <li><a href="{{path('app_shop')}}">Notre Boutique</a></li>
+                    <li><a href="{{path('app_register')}}">Demande d'adhésion</a> </li>
+                    <li><a href="{{path('app_demande_partenariat')}}">Demande de partenariat</a> </li>
+                </ul>
+            </div>
+
+            <div class="card-footer col-sm">
+                <h4 class="my-5"> Nos réseaux sociaux</h4>
+                {# <ul class="reseaux-sociaux list-group d-flex">
+                    <li class=""><a href="mailto:contact@mariamaba-alumni.com"><i class="fa-solid fa-envelope fa-2x"></i> <span class="mx-3">Mail</span></a></li>
+                    <li class=""><a href="https://www.facebook.com/groups/342225004108" target="_blank"><i class="fa-brands fa-facebook fa-2x"></i> <span class="mx-3">Facebook</span></a></li>
+                    <li class=""><a href="https://www.instagram.com/amemba_officiel/" target="_blank"><i class="fa-brands fa-instagram fa-2x"></i> <span class="mx-3">amemba_officiel</span></a></li>
+                    <li class=""><a href="https://twitter.com/AMEMBAofficiel" target="_blank"><i class="fa-brands fa-twitter fa-2x"></i> <span class="mx-3">AMEMBAofficiel</span></a></li>
+                    <!--
+                    <li class=""><a href="https://www.youtube.com/channel/UCDPsjydTxiMkAjlqnur3Btw" target="_blank"><i class="fa-brands fa-youtube fa-2x"></i> <span class="mx-3">Youtube</span></a></li>
+                    -->
+                    <li class=""><a href="https://wa.me/33650128142" target="_blank"><i class="fa-brands fa-whatsapp fa-2x"></i> <span class="mx-3">WhatsApp</span></a></li>
+
+                </ul> #}
+                {{ render(controller(
+                    'App\\Controller\\SocialsController::indexFooter'
+                )) }}
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- FOOTER END -->
+
+
+<script src="{{asset('admin/assets/js/form-edit/ckeditor.js')}}"></script>
+<!-- Slick JS -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+{% block js %}{% endblock js %}
+<!-- JavaScript Bootstrap with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="{{asset('front/js/script.js')}}" defer></script>
+
+</body>
+</html>

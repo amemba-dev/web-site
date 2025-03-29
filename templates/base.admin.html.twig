@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Mazer Admin Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('admin/assets/css/bootstrap.css')}}">
+    
+    <link rel="stylesheet" href="{{asset('admin/assets/vendors/iconly/bold.css')}}">
+    {% block style %}{% endblock style %}
+    <link rel="stylesheet" href="{{asset('admin/assets/vendors/perfect-scrollbar/perfect-scrollbar.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/assets/vendors/bootstrap-icons/bootstrap-icons.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/assets/css/app.css')}}">
+    <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.svg')}}" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+    <div class="sidebar-header">
+        <div class="d-flex justify-content-center">
+            <div class="logo">
+                <a href="{{path('app_accueil')}}"><img src="{{asset('admin/assets/images/logo/logo1.png')}}" alt="Logo" srcset=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-menu">
+        <ul class="menu">
+            <li
+                class="sidebar-item active ">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            
+            <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-person-lines-fill"></i>
+                    <span>Demandes</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="{{path('demande')}}">Adhésion</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{path('app_admin_demande_partenariat')}}">Partenariat</a>
+                    </li>
+                    
+                </ul>
+            </li>
+
+            <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>Agenda</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="{{path('app_categorie_evenement')}}">Catégorie d'evenements</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{path('app_admin_evenement')}}">Evenements</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-cart-check-fill"></i>
+                    <span>Boutique</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="{{path('app_categorie_produit')}}">Catégorie de produit</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{path('app_produit_admin')}}">Gestion des produit</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{path('app_commandes')}}">Gestion des commandes</a>
+                    </li>
+                </ul>
+            </li>
+            <!--
+
+            <li
+                class="sidebar-item  ">
+                <a href="" class='sidebar-link'>
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Commandes</span>
+                </a>
+            </li>
+            -->
+            <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-stickies-fill"></i>
+                    <span>Entreprises/emplois</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="{{path('app_admin_entreprise')}}">Gestion des entreprises</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{path('app_admin_emplois')}}">Offres d'emplois</a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-file-earmark-font-fill"></i>
+                    <span>Blog/Forum</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="{{path('app_categorie_article')}}">Gestion des catégorie d'article</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{path('app_admin_article')}}">Gestion des articles</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{path('app_thematique')}}">Thématique de forum</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{path('app_admin_forum')}}">Gestion des questions</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-item  ">
+                <a href="{{path('app_depot_admin')}}" class='sidebar-link'>
+                    <i class="bi bi-person-plus-fill"></i>
+                    <span>Depots Wallet</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item  ">
+                <a href="{{path('app_cotisation_admin')}}" class='sidebar-link'>
+                    <i class="bi bi-wallet-fill"></i>
+                    <span>Cotisations</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item  ">
+                <a href="{{path('app_admin_membre')}}" class='sidebar-link'>
+                    <i class="bi bi-person-plus-fill"></i>
+                    <span>Ajout de membre</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item  ">
+                <a href="{{path('admin_membre_modif')}}" class='sidebar-link'>
+                    <i class="bi bi-person-plus-fill"></i>
+                    <span>Mettre à jour un membre</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item  ">
+                <a href="{{path('app_admin_bureau')}}" class='sidebar-link'>
+                    <i class="bi bi-people-fill"></i>
+                    <span>Bureau</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item  ">
+                <a href="{{path('app_admin_partenaire')}}" class='sidebar-link'>
+                    <i class="bi bi-people-fill"></i>
+                    <span>Partenaires</span>
+                </a>
+            </li>
+            
+            <li
+                class="sidebar-item  ">
+                <a href="{{path('app_newsletter')}}" class='sidebar-link'>
+                    <i class="bi bi-puzzle-fill"></i>
+                    <span>News letter</span>
+                </a>
+            </li>
+
+            <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>Contenu des pages</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="{{path('app_admin_page_accueil')}}">Page d'accueil</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{path('app_admin_page_about')}}">Page About</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="{{path('app_footer')}}">Réseaux Sociaux</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-item  ">
+                <a href="{{path('app_admin_account')}}" class='sidebar-link'>
+                    <i class="bi bi-person-lines-fill"></i>
+                    <span>Gestion des admin</span>
+                </a>
+            </li>
+            
+            
+
+            <li class="sidebar-item  ">
+                <a href="{{path('app_logout')}}" class='sidebar-link'>
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span class="text-danger">Déconnexion</span>
+                </a>
+            </li>
+            
+           
+            
+        </ul>
+    </div>
+    <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+</div>
+        </div>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <h3>{% block page_title %} Admin {% endblock page_title %}</h3>
+            </div>
+
+            <div class="page-content">
+               
+
+                {% block content %}
+                {% endblock content %}
+
+            </div>
+
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2022 &copy; WinigaJordan</p>
+                    </div>
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+    {% block js %}{% endblock js %}
+    <script src="{{asset('front/js/script.js')}}" defer></script>
+    <script src="{{asset('admin/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
+    <script src="{{asset('admin/assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('admin/assets/vendors/apexcharts/apexcharts.js')}}"></script>
+    <script src="{{asset('admin/assets/js/pages/dashboard.js')}}"></script>
+    <script src="{{asset('admin/assets/js/mazer.js')}}"></script>
+</body>
+
+</html>

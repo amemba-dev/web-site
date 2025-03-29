@@ -1,0 +1,3 @@
+<?php //App%255CController%255CNewsletterController
+
+return [PHP_INT_MAX, []];

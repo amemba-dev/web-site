@@ -1,0 +1,84 @@
+{% extends 'base.pages.html.twig' %}
+{% block page %}{% endblock page %}
+{% block content %}
+<!-- SECOND SECTION START -->
+<section class="second p-3">
+    <div class="shop-container">
+        <div class="row">
+            <aside class="col-lg-3">
+                {% if app.user is null %}
+                <a class="btn btn-primary mb-3" href="{{ path('add_client') }}">
+                    Créer un compte client
+                </a>
+                {% endif  %}
+                <button class="btn btn-outline-secondary mb-3 w-100  d-lg-none" data-bs-toggle="collapse" data-bs-target="#aside_filter">Show filter</button>
+                <div id="aside_filter" class="collapse card d-lg-block mb-5">
+                <article class="filter-group">
+                    <header class="card-header">
+                    <a href="#" class="title" data-bs-toggle="collapse" data-bs-target="#collapse_aside1">
+                        <i class="icon-control fa fa-chevron-down"></i>   Categories 
+                    </a>
+                    </header>
+                    <div class="collapse show" id="collapse_aside1">
+                        <div class="card-body">
+                            <ul class="list-menu">
+                                {% for cat in categories %}
+                                <li><a href="{{path('app_produit_by_category',{id:cat.id})}}">{{cat.libelle}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </article> 
+                </div>
+            </aside>
+            <main class="col-lg-9">
+
+                <div class="mb-4">
+                    <form method="GET">
+                        <div class="input-group mb-2">
+                            <input type="search" name="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                            <button type="submit" class="btn btn-outline-primary">search</button>
+                        </div>
+                    </form>
+                </div>
+
+                <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
+                <strong class="d-block py-2">{{count}} produits trouvés </strong>
+                
+            </header>
+            {% if produits|length > 0 %}
+            <div class="row">
+            {% for i in produits %}
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                  <figure class="card card-product-grid">
+                    <div class="img-wrap text-center"> 
+                      <img src="/produits/{{i.images[0].path}}"> 
+                    </div>
+                    <figcaption class="info-wrap border-top">
+                      <div class="price-wrap">
+                        <strong class="price">{{i.prix}} F CFA</strong>
+                      </div>
+                      <p class="title mb-2">{{i.libelle}}</p>
+                      <a href="{{path('app_produit_detail',{slug:i.slug})}}" class="btn btn-primary">Details</a>
+                      <a href="{{path('app_panier_add',{id:i.id})}}" class="btn btn-light btn-icon"><i class="fa fa-cart-plus" aria-hidden="true"></i> </a>
+                    </figcaption>
+                  </figure>
+                </div>
+              {% endfor %}
+            </div>
+            
+            <hr>
+                <div class="d-flex mt-4 d-flex justify-content-end">
+                    {% do produits.setPageRange(2) %}
+                    {{ knp_pagination_render(produits) }}
+                </div>
+            {% endif %}
+            </main>
+        </div>
+        
+        </div>
+</section>
+<!-- SECOND SECTION END -->
+{% endblock content %}
+
+{% block part %}{% endblock part %}
