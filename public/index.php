@@ -1,4 +1,8 @@
 <?php
+
+<?php phpinfo();
+
+
 echo "cc";
 
 ini_set('display_errors', 1);
